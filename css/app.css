@@ -1,0 +1,49 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 110px;
+    margin-top: 60px;
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        margin-bottom: 150px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    body {
+        margin-bottom: 125px;
+    }
+}
+
+.card{
+    border: 0;
+}
+
+article header{
+    padding-bottom: 1.5em;
+    padding-top: 1em;
+}
+
+footer {
+    color: white;
+    padding-top: 10px;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: bold;
+    padding: 0;
+}
+
+
+.shopping-chart {
+    width: 1em;
+    height:1em;
+}

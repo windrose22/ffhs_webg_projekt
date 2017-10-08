@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="css/app.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous">
+    </script>
+
+    <title>Tony's Pizza Factory</title>
+</head>
+<body>
+<header>
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
+        <a class="navbar-brand" href="index.html">Tony's Pizza Factory</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto navbar-right">
+                <li class="nav-item"><a class="nav-link" href="pizza.html">Pizza</a></li>
+                <li class="nav-item"><a class="nav-link" href="salad.html">Salad</a></li>
+                <li class="nav-item"><a class="nav-link" href="drinks.html">Soft drinks</a></li>
+                <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<article id="feedback">
+    <h1>Feedback</h1>
+    <form>
+        <label for="pizzalike">How do you like our pizza:</label>
+        <ul id="pizzalike">
+            <li><label><input type="radio" name="pizza" value="awesome">Awesome</label></li>
+            <li><label><input type="radio" name="pizza" value="good">Good</label></li>
+            <li><label><input type="radio" name="pizza" value="okay">Okay</label></li>
+            <li><label><input type="radio" name="pizza" value="poor">Poor</label></li>
+        </ul>
+        <label for="pricelike">What do you think about our prices:</label>
+        <ul id="pricelike">
+            <li><label><input type="radio" name="price" value="fair">Fair</label></li>
+            <li><label><input type="radio" name="price" value="ok">Ok</label></li>
+            <li><label><input type="radio" name="price" value="expensive">Expensive</label></li>
+        </ul>
+        <label for="namefield">Your name?</label>
+        <input id="namefield" type="text" name="name">
+        <label for="emailfield">Your email address?</label>
+        <input id="emailfield" type="email" name="email">
+        <label for="suggestionfield">What can we do better?</label>
+        <textarea id="suggestionfield" name="suggestions" cols="60" rows="5"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</article>
+<footer class="fixed-bottom bg-primary container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            Hours: <br>
+            Mon-Thr:
+            <time datetime="11:00">11 a.m.</time>
+            -
+            <time datetime="23:00">23 p.m.</time>
+            <br>
+            Fri-Sat:
+            <time datetime="11:00">11 a.m.</time>
+            -
+            <time datetime="24:00">24 p.m.</time>
+            <br>
+            Sunday closed
+        </div>
+
+        <div class="d-none d-md-block col-md-5 col-lg-6">
+            <blockquote>
+                <p class="mb-0">
+                    The pizzeria is one place I have been wanting to visit for a long time. The reason beeing their Rustica
+                    pizza which is absolutely blow away.
+                </p>
+                <footer>- Jimmy</footer>
+            </blockquote>
+
+        </div>
+        <div class="d-none d-md-block col-md-3 col-lg-3">
+            <address class="float-right">
+                Address:<br>
+                Tony's Pizza Factory<br>
+                2122 N Cark St<br>
+                Chicaco, IL 60615, USA<br>
+            </address>
+        </div>
+
+    </div>
+</footer>
+</body>
+</html>
