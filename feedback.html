@@ -47,7 +47,7 @@
                 <li class="nav-item"><a class="nav-link" href="pizza.html">Pizza</a></li>
                 <li class="nav-item"><a class="nav-link" href="salad.html">Salad</a></li>
                 <li class="nav-item"><a class="nav-link" href="drinks.html">Soft drinks</a></li>
-                <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+                <li class="nav-item active"><a class="nav-link" href="feedback.html">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -59,8 +59,8 @@
     </header>
     <form class="container-fluid">
         <div class="form-group row">
-            <div class="col-form-label col-12 col-sm-4" >
-                <label class="float-left float-sm-right" for="pizzalike">How do you like our pizza:</label>
+            <div class="col-12 col-sm-4" >
+                <label class="float-left float-sm-right text-sm-right" for="pizzalike">How do you like our pizza:</label>
             </div>
 
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pizzalike">
@@ -90,8 +90,8 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-form-label col-12 col-sm-4" >
-                <label class="float-left float-sm-right" for="pricelike">What do you think about our prices:</label>
+            <div class="col-12 col-sm-4" >
+                <label class="float-left float-sm-right text-sm-right" for="pricelike">What do you think about our prices:</label>
             </div>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pricelike">
                 <div class="form-check form-check-inline">
@@ -115,19 +115,26 @@
             </div>
         </div>
         <div class="form-group row">
-        <label class="col-form-label col-sm-4 text-right d-none d-sm-block" for="namefield">Your name?</label>
-        <input class="col-12 col-sm-8 col-md-6 col-lg-4" id="namefield" type="text" name="name" placeholder="Enter your name">
-        </div>
-            <div class="form-group row">
-        <label class="col-form-label col-sm-4 text-right d-none d-sm-block" for="emailfield">Your email address?</label>
-        <input class="col-12 col-sm-8 col-md-6 col-lg-4" id="emailfield" type="email" name="email" placeholder="Enter your email">
+            <label class="col-form-label col-sm-4 d-none d-sm-block text-right" for="namefield">Your name?</label>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <input class="form-control" id="namefield" type="text" name="name" placeholder="Enter your name">
             </div>
-                <div class="form-group row">
-        <label class="col-form-label col-4 text-right d-none d-sm-block" for="suggestionfield">What can we do better?</label>
-        <textarea class="col-12 col-sm-8 col-md-6 col-lg-4" id="suggestionfield" name="suggestions" cols="60" rows="5" placeholder="Enter your suggestions"></textarea>
-                </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-sm-4 text-right d-none d-sm-block" for="emailfield">Your email address?</label>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
+                <input class="form-control" id="emailfield" type="email" name="email" placeholder="Enter your email">
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4 text-right d-none d-sm-block" for="suggestionfield">What can we do better?</label>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
+                <textarea class="form-control" id="suggestionfield" name="suggestions" cols="60" rows="5" placeholder="Enter your suggestions"></textarea>
+            </div>
+        </div>
         <div class="row">
-            <div class="ml-auto col-sm-4 mr-auto">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-8">
                 <button class="float-right" type="submit">Submit</button>
             </div>
         </div>
