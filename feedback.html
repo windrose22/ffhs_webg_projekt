@@ -57,85 +57,99 @@
     <header>
         <h1 class="text-center">Feedback</h1>
     </header>
-    <form class="container-fluid">
+    <form class="container-fluid" id="needs-validation" novalidate>
+
         <div class="form-group row">
             <div class="col-12 col-sm-4" >
-                <label class="float-left float-sm-right text-sm-right" for="pizzalike">How do you like our pizza:</label>
+                <label class="float-left float-sm-right text-sm-right" for="pizzalike">How do you like our pizza?*</label>
             </div>
 
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pizzalike">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="pizza" value="awesome">
-                        Awesome
+                <div>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="pizza" value="awesome" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Awsome</span>
+                    </label>
+                    <label class="custom-control custom-radio"><input class="custom-control-input" type="radio" name="pizza" value="good">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Good</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="pizza" value="okay" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Okay</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="pizza" value="poor" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Poor</span>
                     </label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="radio" name="pizza" value="good">
-                        Good
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="pizza" value="okay">
-                        Okay
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="radio" name="pizza" value="poor">
-                        Poor
-                    </label>
+                <div class="invalid-feedback">
+                    Please select one item.
                 </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-12 col-sm-4" >
-                <label class="float-left float-sm-right text-sm-right" for="pricelike">What do you think about our prices:</label>
+                <label class="float-left float-sm-right text-sm-right" for="pricelike">What do you think about our prices? *</label>
             </div>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pricelike">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="price" value="fair">
-                        Fair
+                <div>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="price" value="fair" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Fair</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="price" value="ok" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Ok</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="price"  value="expensive" required>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Expensive</span>
                     </label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="price" value="ok">
-                        Ok
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="price"  value="expensive">
-                        Expensive
-                    </label>
+                <div class="invalid-feedback">
+                    Please select one item.
                 </div>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-sm-4 d-none d-sm-block text-right" for="namefield">Your name?</label>
+            <label class="col-form-label col-sm-4 d-none d-sm-block text-right" for="namefield">Your name *</label>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-                <input class="form-control" id="namefield" type="text" name="name" placeholder="Enter your name">
+                <input class="form-control" id="namefield" type="text" name="name" placeholder="Enter your name" required>
+                <div class="invalid-feedback">
+                    Please provide your name.
+                </div>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-sm-4 text-right d-none d-sm-block" for="emailfield">Your email address?</label>
+            <label class="col-form-label col-sm-4 text-right d-none d-sm-block" for="emailfield">Your e-mail address *</label>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
-                <input class="form-control" id="emailfield" type="email" name="email" placeholder="Enter your email">
+                <input class="form-control" id="emailfield" type="email" name="email" placeholder="Enter your email" required>
+                <div class="invalid-feedback">
+                    Please provide a valid e-mail address.
+                </div>
             </div>
 
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-4 text-right d-none d-sm-block" for="suggestionfield">What can we do better?</label>
+            <label class="col-form-label col-4 text-right d-none d-sm-block" for="suggestionfield">What can we do better? *</label>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
-                <textarea class="form-control" id="suggestionfield" name="suggestions" cols="60" rows="5" placeholder="Enter your suggestions"></textarea>
+                <textarea class="form-control" id="suggestionfield" name="suggestions" cols="60" rows="5" placeholder="Enter your suggestions" minlength="50" required></textarea>
+                <div class="invalid-feedback">
+                    Please provide a suggestion with at least 50 characters.
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-10 col-lg-8">
-                <button class="float-right" type="submit">Submit</button>
+                <button class="float-right btn btn-default" type="submit">Submit</button>
             </div>
         </div>
 
@@ -180,5 +194,22 @@
 
     </div>
 </footer>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        "use strict";
+        window.addEventListener("load", function() {
+            var form = document.getElementById("needs-validation");
+            form.addEventListener("submit", function(event) {
+                if (form.checkValidity() == false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+            }, false);
+        }, false);
+    }());
+</script>
 </body>
 </html>
