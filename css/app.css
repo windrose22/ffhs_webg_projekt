@@ -26,12 +26,9 @@ body {
     border: 0;
 }
 
-.form-control:valid .was-validated + div{
-    display: none !important;
-}
-
-.form-control:invalid .was-validated + div{
-    display: block !important;
+.feedback {
+    display: none;
+    color: red;
 }
 
 article header{
