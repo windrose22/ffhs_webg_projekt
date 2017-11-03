@@ -26,6 +26,14 @@ body {
     border: 0;
 }
 
+.form-control:valid .was-validated + div{
+    display: none !important;
+}
+
+.form-control:invalid .was-validated + div{
+    display: block !important;
+}
+
 article header{
     padding-bottom: 1.5em;
     padding-top: 1em;
