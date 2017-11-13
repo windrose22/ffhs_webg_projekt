@@ -27,9 +27,11 @@
             crossorigin="anonymous">
     </script>
 
+    <script src="js/app.js"></script>
+
     <title>Tony's Pizza Factory</title>
 </head>
-<body>
+<body onload="getSoftDrinks()">
 <header>
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
         <a class="navbar-brand" href="index.html">Tony's Pizza Factory</a>
@@ -59,58 +61,8 @@
         <h1 class="text-center">Soft drinks</h1>
     </header>
     <form class="container-fluid">
-        <div class="row">
-            <section class="card col-12 col-sm-6 col-lg-4 col-xl-3">
-                <img src="http://via.placeholder.com/150x100" alt="Coke" class="card-img-top">
-                <div class="card-body">
-                    <h2 class="card-title">Coke</h2>
-                    <select name="size" title="size">
-                        <option>50cl</option>
-                    </select>
-                    <span class="price float-right card-title">2$
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </span>
-                </div>
-            </section>
-            <section class="card col-12 col-sm-6 col-lg-4 col-xl-3">
+        <div id="softDrinkList" class="row">
 
-                <img src="http://via.placeholder.com/150x100" alt="Fanta" class="card-img-top">
-                <div class="card-body">
-                    <h2 class="card-title">Fanta</h2>
-                    <select name="size" title="size">
-                        <option>50cl</option>
-                    </select>
-                    <span class="price float-right card-title">2$
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </span>
-                </div>
-            </section>
-            <section class="card col-12 col-sm-6 col-lg-4 col-xl-3">
-
-                <img src="http://via.placeholder.com/150x100" alt="Pepsi" class="card-img-top">
-                <div class="card-body">
-                    <h2 class="card-title">Pepsi</h2>
-                    <select name="size" title="size">
-                        <option>50cl</option>
-                    </select>
-                    <span class="price float-right card-title">2$
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </span>
-                </div>
-            </section>
-            <section class="card col-12 col-sm-6 col-lg-4 col-xl-3">
-
-                <img src="http://via.placeholder.com/150x100" alt="Red bull" class="card-img-top">
-                <div class="card-body">
-                    <h2 class="card-title">Red bull</h2>
-                    <select name="size" title="size">
-                        <option>50cl</option>
-                    </select>
-                    <span class="price float-right card-title">3$
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </span>
-                </div>
-            </section>
         </div>
     </form>
 </article>
