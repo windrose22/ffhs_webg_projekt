@@ -215,3 +215,113 @@ function getAlert() {
     alert.textContent ='Currently, it is not possible to retrieve the item list. Please try it again later';
     return alert;
 }
+
+var formValidator = 5;
+var wasValidated = false;
+var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+assertInput = function(inputId, feedbackId, minLength,maxLength,regex) {
+    console.log(inputId);
+    var valid = true;
+    var element = document.getElementById(inputId);
+    var value = element.value;
+    if (minLength && value.length < minLength) {
+        valid = false;
+        console.log('min')
+    }
+    if (maxLength && value.length > maxLength) {
+        valid = false;
+        console.log('max')
+    }
+    if (regex && !value.match(regex)) {
+        valid=false;
+        console.log('regex')
+    }
+    handleFeedbackAndButton(element.valid, valid, feedbackId);
+    element.valid = valid;
+};
+
+
+
+handleFeedbackAndButton = function(wasValid, isValid, feedbackId) {
+    if (wasValid !== isValid) {
+        formValidator += isValid?-1:+1;
+    }
+    console.log(formValidator)
+    var feedback = document.getElementById(feedbackId);
+    feedback.style.display = !isValid?'block':'none';
+    var submitButton = document.getElementById('submitButton');
+    submitButton.disabled = (formValidator !== 0 && wasValidated);
+    wasValidated = !wasValidated?formValidator===0:true;
+};
+
+assertRadio = function(name, feedbackId) {
+    var valid = false;
+    var buttonList = document.getElementsByName(name);
+    var nrInvalidButtons = 0
+    for (var i = 0; i < buttonList.length; ++i) {
+        var button = buttonList[i];
+        nrInvalidButtons += button.valid?0:1;
+        if (button.checked) {
+            valid = true;
+        }
+    }
+    var wasValid = nrInvalidButtons < buttonList.length;
+    handleFeedbackAndButton(wasValid, valid, feedbackId);
+    if (wasValid !== valid) {
+        for (var j = 0; j < buttonList.length; ++j) {
+            var button2 = buttonList[j];
+            button2.valid = valid;
+            console.log(button2.valid)
+        }
+    }
+
+};
+
+addListener2Input = function(inputId, feedbackId, minLength, maxLength, regex) {
+    var input = document.getElementById(inputId);
+    input.addEventListener('input', function() {
+        assertInput(inputId, feedbackId, minLength, maxLength, regex);
+    });
+    input.valid = false;
+};
+
+addListener2Radio = function(name, feedbackId) {
+    var buttonList = document.getElementsByName(name);
+    for (var i = 0; i < buttonList.length; ++i) {
+        var button = buttonList[i];
+        button.addEventListener('change', function() {
+            assertRadio(name, feedbackId);
+        });
+        button.valid = false;
+    }
+};
+
+initFeedbackValidation = function () {
+    formValidator = 5;
+    wasValidated = false;
+
+    addListener2Input('namefield', 'nameFeedback', 1);
+    addListener2Input('emailfield', 'emailFeedback', null, null, emailRegex);
+    addListener2Input('suggestionfield', 'suggestionFeedback', 50);
+    addListener2Radio('pizza', 'pizzaFeedback');
+    addListener2Radio('price', 'priceFeedback');
+    var form = document.getElementById("needs-validation");
+// no errors are shown at the very beginning
+// thus, the submit button needs to be enabled
+// if we click the submit button the first time
+// the form needs to be validated as well
+    form.addEventListener("submit", function(event) {
+        wasValidated = true;
+        assertInput('namefield', 'nameFeedback', 1);
+        assertInput('emailfield', 'emailFeedback', null, null, emailRegex);
+        assertInput('suggestionfield', 'suggestionFeedback', 50);
+        assertRadio('pizza', 'pizzaFeedback');
+        assertRadio('price', 'priceFeedback');
+        if (formValidator !== 0) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }, false);
+}
+
