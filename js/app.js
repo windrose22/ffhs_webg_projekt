@@ -1,6 +1,6 @@
 
 
-function request(type, url, token, contentType) {
+function request(type, url, token, contentType, params) {
     return new Promise(function(succeed, fail) {
         var req = new XMLHttpRequest();
         req.open(type, url, true);
@@ -19,7 +19,7 @@ function request(type, url, token, contentType) {
         req.addEventListener("error", function() {
             fail(new Error("Network error"));
         });
-        req.send(null);
+        req.send(params);
     });
 }
 
@@ -212,7 +212,7 @@ function getAlert() {
     var alert = document.createElement('div');
     alert.setAttribute('class', 'alert alert-warning');
     alert.setAttribute('role', 'alert');
-    alert.textContent ='Currently, it is not possible to retrieve the item list. Please try it again later';
+    alert.textContent ='Currently, it is not possible to retrieve the item list. Please try it again later.';
     return alert;
 }
 
@@ -304,24 +304,106 @@ initFeedbackValidation = function () {
     addListener2Input('namefield', 'nameFeedback', 1);
     addListener2Input('emailfield', 'emailFeedback', null, null, emailRegex);
     addListener2Input('suggestionfield', 'suggestionFeedback', 50);
-    addListener2Radio('pizza', 'pizzaFeedback');
-    addListener2Radio('price', 'priceFeedback');
-    var form = document.getElementById("needs-validation");
-// no errors are shown at the very beginning
-// thus, the submit button needs to be enabled
-// if we click the submit button the first time
-// the form needs to be validated as well
-    form.addEventListener("submit", function(event) {
-        wasValidated = true;
-        assertInput('namefield', 'nameFeedback', 1);
-        assertInput('emailfield', 'emailFeedback', null, null, emailRegex);
-        assertInput('suggestionfield', 'suggestionFeedback', 50);
-        assertRadio('pizza', 'pizzaFeedback');
-        assertRadio('price', 'priceFeedback');
-        if (formValidator !== 0) {
-            event.preventDefault();
-            event.stopPropagation();
+    addListener2Radio('pizzaRating', 'pizzaFeedback');
+    addListener2Radio('prizeRating', 'priceFeedback');
+}
+
+submitFeedback = function() {
+    wasValidated = true;
+    assertInput('namefield', 'nameFeedback', 1);
+    assertInput('emailfield', 'emailFeedback', null, null, emailRegex);
+    assertInput('suggestionfield', 'suggestionFeedback', 50);
+    assertRadio('pizzaRating', 'pizzaFeedback');
+    assertRadio('prizeRating', 'priceFeedback');
+    console.log(formValidator)
+    if (formValidator === 0) {
+        console.log('send post request')
+        console.log(event);
+        request('POST',
+            'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
+            'application/json;charset=UTF-8',getParams()).then(function(response) {
+            console.log(response);
+            updateModal();
+            $('#exampleModal').modal('show');
+        }, function(error) {
+                var form = document.getElementById('needs-validation');
+            var alert = getSubmitAlert();
+            form.insertBefore(alert, form.childNodes[0]);
+        });
+    }
+}
+
+function getSubmitAlert() {
+    var alert = document.createElement('div');
+    alert.setAttribute('class', 'alert alert-warning');
+    alert.setAttribute('role', 'alert');
+    alert.textContent ='Currently, it is not possible to send feedback. Please try it again later.';
+    return alert;
+}
+
+/* Diese Funktion sammelt die Parameters für die POST Operationen */
+/* Die Parameters sind die Werte aus dem Feedback-Formular */
+function getParams() {
+    var pizzaRatingWert = null;
+    document.getElementsByName("pizzaRating").forEach(function(item) {
+        if (item.checked) {
+            pizzaRatingWert = item.value;
         }
-    }, false);
+    });
+    var prizeRatingWert = null;
+    document.getElementsByName("prizeRating").forEach(function(item) {
+        if (item.checked) {
+            prizeRatingWert = item.value;
+        }
+    });
+
+    // encodeURIComponent ermöglicht eine richtige Umwandlung von u.a. speziellen Zeichen
+    // der umgekehrte Weg ist mit decodeURIComponent erreicht.
+    var nameWert = encodeURIComponent(document.getElementsByName("name")[0].value);
+    var emailWert = encodeURIComponent(document.getElementsByName("email")[0].value);
+    var feedbackWert = encodeURIComponent(document.getElementsByName("feedback")[0].value);
+
+    var feedbackObjekt = {
+        "pizzaRating": pizzaRatingWert,
+        "prizeRating": prizeRatingWert,
+        "name": nameWert,
+        "email": emailWert,
+        "feedback": feedbackWert
+    };
+
+    // aus einem Json-Objekt entsprechendes String erzeugen
+    return JSON.stringify(feedbackObjekt);
+}
+
+
+updateModal = function() {
+    request('GET',
+        'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
+        'application/json;charset=UTF-8').then(function(response) {
+            console.log(response);
+            var data = JSON.parse(response);
+            data = data.map(function(item) {
+                return {prizeRating:item.prizeRating, pizzaRating:item.pizzaRating, count:1}
+            });
+        var svg = dimple.newSvg("#pizzaRatingChart", 400   , 200);
+        var myChart = new dimple.chart(svg, data);
+        console.log(myChart)
+        myChart.setBounds(10, 10, 340, 180)
+        myChart.addMeasureAxis("p", "count");
+        myChart.addSeries("pizzaRating", dimple.plot.pie);
+        myChart.addLegend(350, 10, 90, 180, "left");
+        myChart.draw();
+
+
+        var svg2 = dimple.newSvg("#priceRatingChart", 400   , 200);
+        var myChart2 = new dimple.chart(svg2, data);
+        console.log(myChart2)
+        myChart2.setBounds(10, 10, 390, 180)
+        myChart2.addMeasureAxis("p", "count");
+        myChart2.addSeries("prizeRating", dimple.plot.pie);
+        myChart2.addLegend(350, 10, 90, 180, "left");
+        myChart2.draw();
+
+    })
 }
 

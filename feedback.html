@@ -27,6 +27,9 @@
             crossorigin="anonymous">
     </script>
 
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+
     <script src="js/app.js"></script>
 
     <title>Tony's Pizza Factory</title>
@@ -59,7 +62,9 @@
     <header>
         <h1 class="text-center">Feedback</h1>
     </header>
-    <form class="container-fluid" id="needs-validation" novalidate>
+    <form class="container-fluid"
+          id="needs-validation"
+          novalidate>
 
         <div class="form-group row">
             <div class="col-12 col-sm-4" >
@@ -69,22 +74,22 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pizzalike">
                 <div>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="pizza" value="awesome">
+                        <input class="custom-control-input" type="radio" name="pizzaRating" value="awesome">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Awsome</span>
                     </label>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="pizza" value="good">
+                        <input class="custom-control-input" type="radio" name="pizzaRating" value="good">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Good</span>
                     </label>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="pizza" value="okay">
+                        <input class="custom-control-input" type="radio" name="pizzaRating" value="okay">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Okay</span>
                     </label>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="pizza" value="poor">
+                        <input class="custom-control-input" type="radio" name="pizzaRating" value="poor">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Poor</span>
                     </label>
@@ -102,17 +107,17 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" id="pricelike">
                 <div>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="price" value="fair">
+                        <input class="custom-control-input" type="radio" name="prizeRating" value="fair">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Fair</span>
                     </label>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="price" value="ok">
+                        <input class="custom-control-input" type="radio" name="prizeRating" value="okay">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Ok</span>
                     </label>
                     <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="price"  value="expensive">
+                        <input class="custom-control-input" type="radio" name="prizeRating"  value="expensive">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Expensive</span>
                     </label>
@@ -144,7 +149,7 @@
         <div class="form-group row">
             <label class="col-form-label col-4 text-right d-none d-sm-block" for="suggestionfield">What can we do better? *</label>
             <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
-                <textarea class="form-control" id="suggestionfield" name="suggestions" cols="60" rows="5" placeholder="Enter your suggestions"></textarea>
+                <textarea class="form-control" id="suggestionfield" name="feedback" cols="60" rows="5" placeholder="Enter your suggestions"></textarea>
                 <div id="suggestionFeedback" class="feedback">
                     Please provide a suggestion with at least 50 characters.
                 </div>
@@ -152,11 +157,34 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-10 col-lg-8">
-                <button id="submitButton" class="float-right btn btn-default" type="submit">Submit</button>
+                <button id="submitButton" class="float-right btn btn-default" type="button" onclick="submitFeedback()">Submit</button>
             </div>
         </div>
 
     </form>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thank you for your feedback!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.reload()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Overall Feedback</h5>
+                    <h6>Pizza Rating</h6>
+                    <div id="pizzaRatingChart"></div>
+                    <h6>Price Rating</h6>
+                    <div id="priceRatingChart"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </article>
 <footer class="fixed-bottom bg-primary container-fluid">
     <div class="row">
