@@ -221,21 +221,17 @@ var wasValidated = false;
 var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 assertInput = function(inputId, feedbackId, minLength,maxLength,regex) {
-    console.log(inputId);
     var valid = true;
     var element = document.getElementById(inputId);
     var value = element.value;
     if (minLength && value.length < minLength) {
         valid = false;
-        console.log('min')
     }
     if (maxLength && value.length > maxLength) {
         valid = false;
-        console.log('max')
     }
     if (regex && !value.match(regex)) {
         valid=false;
-        console.log('regex')
     }
     handleFeedbackAndButton(element.valid, valid, feedbackId);
     element.valid = valid;
@@ -247,7 +243,6 @@ handleFeedbackAndButton = function(wasValid, isValid, feedbackId) {
     if (wasValid !== isValid) {
         formValidator += isValid?-1:+1;
     }
-    console.log(formValidator)
     var feedback = document.getElementById(feedbackId);
     feedback.style.display = !isValid?'block':'none';
     var submitButton = document.getElementById('submitButton');
@@ -272,7 +267,6 @@ assertRadio = function(name, feedbackId) {
         for (var j = 0; j < buttonList.length; ++j) {
             var button2 = buttonList[j];
             button2.valid = valid;
-            console.log(button2.valid)
         }
     }
 
@@ -315,14 +309,10 @@ submitFeedback = function() {
     assertInput('suggestionfield', 'suggestionFeedback', 50);
     assertRadio('pizzaRating', 'pizzaFeedback');
     assertRadio('prizeRating', 'priceFeedback');
-    console.log(formValidator)
     if (formValidator === 0) {
-        console.log('send post request')
-        console.log(event);
         request('POST',
             'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
             'application/json;charset=UTF-8',getParams()).then(function(response) {
-            console.log(response);
             updateModal();
             $('#exampleModal').modal('show');
         }, function(error) {
