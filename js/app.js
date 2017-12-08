@@ -80,11 +80,14 @@ function getPizzaSection(name, price, id, ingredients, imageUrl) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
 
+    var imgContainer = document.createElement('div');
+    imgContainer.setAttribute('class', 'img-container');
     var image = document.createElement('img');
     image.setAttribute('src', imageUrl);
     image.setAttribute('alt', name);
     image.setAttribute('class', 'card-img-top');
-    section.appendChild(image);
+    imgContainer.appendChild(image);
+    section.appendChild(imgContainer);
 
     var div = document.createElement('div');
     div.setAttribute('class', 'card-body');
@@ -107,7 +110,7 @@ function getPizzaSection(name, price, id, ingredients, imageUrl) {
 
     var p = document.createElement('p');
     p.setAttribute('class', 'card-text');
-    p.textContent = ingredients;
+    p.textContent = ingredients.join(', ');
 
     div.appendChild(p);
     section.appendChild(div);
@@ -119,11 +122,14 @@ function getSaladSection(name, price, id, ingredients, imageUrl) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
 
+    var imgContainer = document.createElement('div');
+    imgContainer.setAttribute('class', 'img-container');
     var image = document.createElement('img');
     image.setAttribute('src', imageUrl);
     image.setAttribute('alt', name);
     image.setAttribute('class', 'card-img-top');
-    section.appendChild(image);
+    imgContainer.appendChild(image);
+    section.appendChild(imgContainer);
 
     var div = document.createElement('div');
     div.setAttribute('class', 'card-body');
@@ -135,7 +141,7 @@ function getSaladSection(name, price, id, ingredients, imageUrl) {
 
     var p = document.createElement('p');
     p.setAttribute('class', 'card-text');
-    p.textContent = ingredients;
+    p.textContent = ingredients.join(', ');
     div.appendChild(p);
 
     var select = document.createElement('select');
@@ -170,11 +176,14 @@ function getSoftDrinkSection(name, price, id, imageUrl, volume) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
 
+    var imgContainer = document.createElement('div');
+    imgContainer.setAttribute('class', 'img-container');
     var image = document.createElement('img');
     image.setAttribute('src', imageUrl);
     image.setAttribute('alt', name);
     image.setAttribute('class', 'card-img-top');
-    section.appendChild(image);
+    imgContainer.appendChild(image);
+    section.appendChild(imgContainer);
 
     var div = document.createElement('div');
     div.setAttribute('class', 'card-body');
@@ -313,8 +322,10 @@ submitFeedback = function() {
         request('POST',
             'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
             'application/json;charset=UTF-8',getParams()).then(function(response) {
-            updateModal();
-            $('#exampleModal').modal('show');
+            var deferred = updateModal()
+            deferred.then(function() {
+                $('#exampleModal').modal('show');
+            });
         }, function(error) {
                 var form = document.getElementById('needs-validation');
             var alert = getSubmitAlert();
@@ -367,7 +378,7 @@ function getParams() {
 
 
 updateModal = function() {
-    request('GET',
+    return request('GET',
         'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
         'application/json;charset=UTF-8').then(function(response) {
             console.log(response);
@@ -378,22 +389,27 @@ updateModal = function() {
         var svg = dimple.newSvg("#pizzaRatingChart", 400   , 200);
         var myChart = new dimple.chart(svg, data);
         console.log(myChart)
-        myChart.setBounds(10, 10, 340, 180)
+        myChart.setBounds(50, 10, 180, 180);
         myChart.addMeasureAxis("p", "count");
         myChart.addSeries("pizzaRating", dimple.plot.pie);
-        myChart.addLegend(350, 10, 90, 180, "left");
+        var legend = myChart.addLegend(250, 10, 50, 180, "left");
+        legend.fontSize = '.7em';
         myChart.draw();
 
 
         var svg2 = dimple.newSvg("#priceRatingChart", 400   , 200);
         var myChart2 = new dimple.chart(svg2, data);
         console.log(myChart2)
-        myChart2.setBounds(10, 10, 390, 180)
+        myChart2.setBounds(50, 10, 180, 180);
         myChart2.addMeasureAxis("p", "count");
         myChart2.addSeries("prizeRating", dimple.plot.pie);
-        myChart2.addLegend(350, 10, 90, 180, "left");
+        var legend2 = myChart2.addLegend(250, 10, 50, 180, "left");
+        legend2.fontSize = '.7em';
+
         myChart2.draw();
 
-    })
+        return true;
+
+    });
 }
 

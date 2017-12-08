@@ -46,3 +46,21 @@ footer {
     font-weight: bold;
     padding: 0;
 }
+
+.img-container {
+    height: 200px;
+    overflow: hidden;
+    background: grey;
+    position: relative;
+}
+
+.img-container .card-img-top {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    margin:auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
