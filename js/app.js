@@ -35,7 +35,7 @@ function getPizzas() {
             pizzaList.appendChild(pizzaSection);
         });
 
-    }, function(error) {
+    }, function() {
         var alert = getAlert();
         pizzaList.appendChild(alert);
     });
@@ -52,7 +52,7 @@ function getSalads() {
                 item.id, item.ingredients, item.imageUrl);
             saladList.appendChild(saladSection);
         });
-    }, function(error) {
+    }, function() {
         var alert = getAlert();
         saladList.appendChild(alert);
     });
@@ -69,7 +69,7 @@ function getSoftDrinks() {
                 item.id, item.imageUrl, item.volume);
             softDrinkList.appendChild(softDrinkSection);
         });
-    }, function(error) {
+    }, function() {
         var alert = getAlert();
         softDrinkList.appendChild(alert);
     });
@@ -79,6 +79,7 @@ function getSoftDrinks() {
 function getPizzaSection(name, price, id, ingredients, imageUrl) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
+    section.setAttribute('id', name.replace(/ /g,''));
 
     var imgContainer = document.createElement('div');
     imgContainer.setAttribute('class', 'img-container');
@@ -103,6 +104,7 @@ function getPizzaSection(name, price, id, ingredients, imageUrl) {
     var chart = document.createElement('i');
     chart.setAttribute('class', 'fa fa-shopping-cart');
     chart.setAttribute('aria-hidden', 'true');
+    chart.setAttribute('onclick', 'sendPizza(\''+name+'\')');
     span.appendChild(chart);
 
     header.appendChild(span);
@@ -118,9 +120,25 @@ function getPizzaSection(name, price, id, ingredients, imageUrl) {
     return section;
 }
 
+function sendPizza(pizza) {
+    var pizzaItem = { type: encodeURIComponent('pizza') , name: encodeURIComponent(pizza)};
+    sendOrder(pizzaItem).catch(function() {
+        var form = document.getElementById('pizzaList');
+        var alert = getOrderAlert();
+        form.insertBefore(alert, form.childNodes[0]);
+    });
+}
+
+function sendOrder(item) {
+    return request('POST',
+        'https://tonyspizzafactory.herokuapp.com/api/orders','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
+        'application/json;charset=UTF-8',JSON.stringify(item));
+}
+
 function getSaladSection(name, price, id, ingredients, imageUrl) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
+    section.setAttribute('id', name.replace(/ /g,''));
 
     var imgContainer = document.createElement('div');
     imgContainer.setAttribute('class', 'img-container');
@@ -148,9 +166,11 @@ function getSaladSection(name, price, id, ingredients, imageUrl) {
     select.setAttribute('name', 'dessing');
     select.setAttribute('title', 'dressing');
     var french = document.createElement('option');
+    french.setAttribute('value', 'french');
     french.textContent = 'French dressing';
     select.appendChild(french);
     var italian = document.createElement('option');
+    italian.setAttribute('value', 'italian');
     italian.textContent = 'Italian dressing';
     select.appendChild(italian);
     div.appendChild(select);
@@ -162,6 +182,7 @@ function getSaladSection(name, price, id, ingredients, imageUrl) {
     var chart = document.createElement('i');
     chart.setAttribute('class', 'fa fa-shopping-cart');
     chart.setAttribute('aria-hidden', 'true');
+    chart.setAttribute('onclick', 'sendSalad(\''+name+'\')');
     span.appendChild(chart);
 
     div.appendChild(span);
@@ -171,10 +192,25 @@ function getSaladSection(name, price, id, ingredients, imageUrl) {
     return section;
 }
 
+function sendSalad(salad) {
+    var mySalad = document.getElementById(salad.replace(/ /g,''));
+    var saladItem = {
+        type: encodeURIComponent('salad'),
+        name: encodeURIComponent(salad),
+        dressing: encodeURIComponent(mySalad.getElementsByTagName('select')[0].value)
+    };
+    sendOrder(saladItem).catch(function() {
+        var form = document.getElementById('saladList');
+        var alert = getOrderAlert();
+        form.insertBefore(alert, form.childNodes[0]);
+    });
+}
+
 
 function getSoftDrinkSection(name, price, id, imageUrl, volume) {
     var section = document.createElement('section');
     section.setAttribute('class', 'card col-12 col-sm-6 col-lg-4 col-xl-3');
+    section.setAttribute('id', name.replace(/ /g,''));
 
     var imgContainer = document.createElement('div');
     imgContainer.setAttribute('class', 'img-container');
@@ -208,6 +244,7 @@ function getSoftDrinkSection(name, price, id, imageUrl, volume) {
     var chart = document.createElement('i');
     chart.setAttribute('class', 'fa fa-shopping-cart');
     chart.setAttribute('aria-hidden', 'true');
+    chart.setAttribute('onclick', 'sendSoftDrink(\''+name+'\')');
     span.appendChild(chart);
 
     div.appendChild(span);
@@ -215,6 +252,20 @@ function getSoftDrinkSection(name, price, id, imageUrl, volume) {
     section.appendChild(div);
 
     return section;
+}
+
+function sendSoftDrink(drink) {
+    var myDrink = document.getElementById(drink.replace(/ /g,''));
+    var drinkItem = {
+        type: encodeURIComponent('softdrink'),
+        name: encodeURIComponent(drink),
+        cl: encodeURIComponent(myDrink.getElementsByTagName('select')[0].value)
+    };
+    sendOrder(drinkItem).catch(function() {
+        var form = document.getElementById('saladList');
+        var alert = getOrderAlert();
+        form.insertBefore(alert, form.childNodes[0]);
+    });
 }
 
 function getAlert() {
@@ -262,7 +313,7 @@ handleFeedbackAndButton = function(wasValid, isValid, feedbackId) {
 assertRadio = function(name, feedbackId) {
     var valid = false;
     var buttonList = document.getElementsByName(name);
-    var nrInvalidButtons = 0
+    var nrInvalidButtons = 0;
     for (var i = 0; i < buttonList.length; ++i) {
         var button = buttonList[i];
         nrInvalidButtons += button.valid?0:1;
@@ -279,7 +330,7 @@ assertRadio = function(name, feedbackId) {
         }
     }
 
-};
+}
 
 addListener2Input = function(inputId, feedbackId, minLength, maxLength, regex) {
     var input = document.getElementById(inputId);
@@ -287,7 +338,7 @@ addListener2Input = function(inputId, feedbackId, minLength, maxLength, regex) {
         assertInput(inputId, feedbackId, minLength, maxLength, regex);
     });
     input.valid = false;
-};
+}
 
 addListener2Radio = function(name, feedbackId) {
     var buttonList = document.getElementsByName(name);
@@ -298,7 +349,7 @@ addListener2Radio = function(name, feedbackId) {
         });
         button.valid = false;
     }
-};
+}
 
 initFeedbackValidation = function () {
     formValidator = 5;
@@ -321,12 +372,10 @@ submitFeedback = function() {
     if (formValidator === 0) {
         request('POST',
             'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
-            'application/json;charset=UTF-8',getParams()).then(function(response) {
-            var deferred = updateModal()
-            deferred.then(function() {
-                $('#exampleModal').modal('show');
-            });
-        }, function(error) {
+            'application/json;charset=UTF-8',getParams()).then(function() {
+            updateModal();
+            $('#exampleModal').modal('show');
+        }, function() {
                 var form = document.getElementById('needs-validation');
             var alert = getSubmitAlert();
             form.insertBefore(alert, form.childNodes[0]);
@@ -339,6 +388,14 @@ function getSubmitAlert() {
     alert.setAttribute('class', 'alert alert-warning');
     alert.setAttribute('role', 'alert');
     alert.textContent ='Currently, it is not possible to send feedback. Please try it again later.';
+    return alert;
+}
+
+function getOrderAlert() {
+    var alert = document.createElement('div');
+    alert.setAttribute('class', 'alert alert-warning');
+    alert.setAttribute('role', 'alert');
+    alert.textContent ='Currently, it is not possible to send an order. Please try it again later.';
     return alert;
 }
 
@@ -381,14 +438,12 @@ updateModal = function() {
     return request('GET',
         'https://tonyspizzafactory.herokuapp.com/api/feedback','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.MQ.bYceSpllpyYQixgNzDt7dpCkEojdv3NKD-85XLXfdI4',
         'application/json;charset=UTF-8').then(function(response) {
-            console.log(response);
             var data = JSON.parse(response);
             data = data.map(function(item) {
                 return {prizeRating:item.prizeRating, pizzaRating:item.pizzaRating, count:1}
             });
         var svg = dimple.newSvg("#pizzaRatingChart", 400   , 200);
         var myChart = new dimple.chart(svg, data);
-        console.log(myChart)
         myChart.setBounds(50, 10, 180, 180);
         myChart.addMeasureAxis("p", "count");
         myChart.addSeries("pizzaRating", dimple.plot.pie);
@@ -399,7 +454,6 @@ updateModal = function() {
 
         var svg2 = dimple.newSvg("#priceRatingChart", 400   , 200);
         var myChart2 = new dimple.chart(svg2, data);
-        console.log(myChart2)
         myChart2.setBounds(50, 10, 180, 180);
         myChart2.addMeasureAxis("p", "count");
         myChart2.addSeries("prizeRating", dimple.plot.pie);
